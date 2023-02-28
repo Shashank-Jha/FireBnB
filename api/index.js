@@ -3,7 +3,8 @@ const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const User = require("./models/User");
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose"); 
 require("dotenv").config();
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(
 mongoose.connect(process.env.MONGO_URL);
 
 app.use(express.json()); // to handle json from post req
+app.use(cookieParser())
 
 app.get("/test", (req, res) => {
   res.json("test ok");
@@ -48,13 +50,27 @@ catch (e){
       if(passwordOk){
         jwt.sign({email:userDoc.email, id:userDoc._id},jwtSecret,{},(err,token)=>{
           if(err) throw err;
-          res.cookie('token',token).json('correct pass!');
+          res.cookie('token',token).json(userDoc);
         })
       }else{
         res.status(422).json("wrong pass!");
       }
     }else{
       res.json("error 404 : not found!");
+    }
+  });
+
+
+  app.get('/profile',(req,res)=>{
+    const {token} = req.cookies;
+    if(token){
+      jwt.verify(token,jwtSecret,{},async(err,userData)=>{
+        if(err) throw err;
+        const {name,email,_id} = await User.findById(userData.id);
+        res.json({name,email,_id});
+      });
+    } else{
+      res.json(null);
     }
   });
 

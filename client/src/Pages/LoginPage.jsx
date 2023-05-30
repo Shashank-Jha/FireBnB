@@ -48,7 +48,7 @@ function LoginPage() {
             value={password}
             onChange={(ev) => setPassword(ev.target.value)}
           />
-          <button className="primary">Login</button>
+          <button className="primary transition transform hover:scale-105 hover:bg-primary hover:text-white ease-in ">Login</button>
           <div className="py-2 text-center text-gray-500">
             Don't have account yet?{" "}
             <Link to={"/register"} className="font-bold text-primary underline">

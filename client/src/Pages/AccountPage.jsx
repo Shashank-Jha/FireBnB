@@ -27,47 +27,39 @@ function AccountPage() {
     return className;
   }
 
-  async function logout(){
-    await axios.post('/logout');
+  async function logout() {
+    await axios.post("/logout");
     setUser(null);
-    setRedirect('/');
+    setRedirect("/");
   }
 
-  if(redirect){
-    return <Navigate to={'/'}/>
+  if (redirect) {
+    return <Navigate to={"/"} />;
   }
 
   return (
     <div>
-    <nav className="w-full flex justify-center mt-8 gap-2">
-      <Link className={linkClass("profile")} to={"/account"}>
-        My Profile
-      </Link>
-      <Link className={linkClass("bookings")} to={"/account/bookings"}>
-        My Bookings
-      </Link>
-      <Link className={linkClass("places")} to={"/account/places"}>
-        My accomodations
-      </Link>
-    </nav>
-    {
-        subpage === 'profile' && (
-            <div className="text-center max-w-lg mx-auto">
-            Logged in as {user.name} ({user.email})<br/>
-            <button className="primary max-w-sm mt-2" onClick={logout}>Logout</button>
-            </div>
-        )
-    }
-    {
-      subpage === 'bookings' && (
-        <h1>My Bookings</h1>
-      )
-    }
-    {
-      subpage === 'places' && (
-        <h1>My Places</h1>
-      )
-    }
+      <nav className="w-full flex justify-center mt-8 gap-2">
+        <Link className={linkClass("profile")} to={"/account"}>
+          My Profile
+        </Link>
+        <Link className={linkClass("bookings")} to={"/account/bookings"}>
+          My Bookings
+        </Link>
+        <Link className={linkClass("places")} to={"/account/places"}>
+          My accomodations
+        </Link>
+      </nav>
+      {subpage === "profile" && (
+        <div className="text-center max-w-lg mx-auto mt-10">
+          Logged in as {user.name} <strong>({user.email})</strong><br />
+          <button className="primary max-w-sm mt-4 transition transform hover:scale-105 hover:bg-primary hover:text-white ease-in" onClick={logout}>
+            Logout
+          </button>
+        </div>
+      )}
+      {subpage === "bookings" && <h1>My Bookings</h1>}
+      {subpage === "places" && <h1>My Places</h1>}
     </div>
   );
 }

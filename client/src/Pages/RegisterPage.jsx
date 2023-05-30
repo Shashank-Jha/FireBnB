@@ -45,8 +45,8 @@ function RegisterPage() {
             value={password}
             onChange={ev => setPassword(ev.target.value)}
           />
-          <button className="primary">Register</button>
-          <div className="py-2 text-center text-gray-500">
+          <button className="primary transition transform hover:scale-105 hover:bg-primary hover:text-white ease-in">Register</button>
+          <div className="py-2 text-center text-gray-500 ">
             Already a member?{" "}
             <Link to={"/login"} className="font-bold text-primary underline">
               Login
